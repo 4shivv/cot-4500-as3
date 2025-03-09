@@ -1,14 +1,26 @@
-from src.main.assignment_3 import euler_method, runge_kutta_method
+import unittest
+from src.main.assignment_3 import euler_method, runge_kutta_method, f
 
-def test_methods():
-    f = lambda t, y: t - y**2
-    y0 = 1
-    t0 = 0
-    t_end = 2
-    n = 10
+class TestAssignment3(unittest.TestCase):
+    def test_euler_method(self):
+        a = 0  # Start of range
+        b = 2  # End of range
+        n = 10  # Number of iterations
+        initial_condition = 1  # f(0) = 1
+        
+        expected = 1.2446380979332121
+        actual = euler_method(f, a, b, n, initial_condition)
+        self.assertAlmostEqual(expected, actual, places=10)
+    
+    def test_runge_kutta_method(self):
+        a = 0  # Start of range
+        b = 2  # End of range
+        n = 10  # Number of iterations
+        initial_condition = 1  # f(0) = 1
+        
+        expected = 1.251316587879806
+        actual = runge_kutta_method(f, a, b, n, initial_condition)
+        self.assertAlmostEqual(expected, actual, places=10)
 
-    euler_result = euler_method(f, y0, t0, t_end, n)
-    runge_kutta_result = runge_kutta_method(f, y0, t0, t_end, n)
-
-    assert abs(euler_result - 1.2446380979332121) < 1e-6
-    assert abs(runge_kutta_result - 1.251316588789806) < 1e-6
+if __name__ == "__main__":
+    unittest.main()
